@@ -7,12 +7,14 @@
 
 var gameState = "splash";
 var player1;
+var gameTimer;
 
 function setup() {
 
   createCanvas(600, 400);
   player1 = new Player(width/2, height * 4/5);
   console.log(player1);
+  gameTimer = new Timer(10000); // 10 second timer 
 
 }
 
@@ -59,6 +61,13 @@ function play() {
   // player1.x = mouseX // this is if I want player1 to follow the mouse 
   // I will be using the arrow keys instead
   player1.display();
+  
+  textAlign(LEFT);
+  text("elapsed time: " + gameTimer.elapsedTime, 40, 100);
+  // show elapsed time in top left corner 
+  if(gameTimer.isFinished()){
+    gameState = "gameOver";
+  }
 
 }
 
@@ -76,10 +85,11 @@ function mousePressed() {
   console.log("click!");
 
   if(gameState == "splash"){
-    gameState = "play";
+    gameState = "play"; // go to the play() screen
+    gameTimer.start(); // starts the timer 
   } // go to "play"
   else if(gameState == "play"){
-    gameState = "gameOver";
+    // gameState = "gameOver";
   } // go to "gameOver"
   else if(gameState == "gameOver"){
     gameState = "splash";
