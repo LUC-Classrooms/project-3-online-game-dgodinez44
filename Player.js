@@ -9,35 +9,43 @@ function Player(tempX, tempY) {
     push(); // create a drawing layer
     translate(this.x, this.y); // move origin point
     rotate(this.angle); // player can rotate
+    
+    // Head
+    strokeWeight(1); // Adjust strokeWeight to keep the stroke thickness the same
+    fill("yellow");
+    ellipse(-25, 0, 40, 30);
 
-    fill(0); // black
-    /** calculate points on a triangle based on a unit circle. You could use this method to draw more complex polygons that would fit inside a circle centered on (this.x, this.y)
-     * For any point around the circle, x = the cosine of the angle in radians from 0 to TWO_PI, and y = the sine of that angle. an angle of 0 is the right side of the circle, PI is the left side. 
-     * The points generated this way are relative to the coordinate point (0,0). 
-     * The translate() function (above, line 10) takes care of moving it on the canvas.
-     * 
-    */
-    let r = this.diam / 2; // radius
-    // 270 degrees (top):
-    let x1 = cos(PI + HALF_PI) * r; 
-    let y1 = sin(PI + HALF_PI) * r; 
-    // 30 degrees (bottom right):
-    let x2 = cos(PI / 6) * r;
-    let y2 = sin(PI / 6) * r;
-    // 150 degrees (bottom left): 
-    let x3 = cos(PI * 5 / 6) * r;
-    let y3 = sin(PI * 5 / 6) * r;
-    //draw the triangle:
-    //triangle(x1, y1, x2, y2, x3, y3);
-    //or draw a complex polygon
-    beginShape();
-    vertex(x1, y1);
-    vertex(x2, y2);
-    vertex(x3, y3);
-    endShape();
-    // uncomment the next two lines to see the circle
-    // noFill();
-    // ellipse(0, 0, this.diam, this.diam);
+    // Body
+    ellipse(10, 20, 55, 35);
+
+    // Eye
+    fill("black");
+    ellipse(-32.5, -5, 5, 7.5);
+
+    // Wing
+    noFill();
+    rotate(PI / -2);
+    arc(-20, 5, 15, 40, 0, PI);
+
+    // Beak
+    fill("orange");
+    triangle(0, -55, 5, -45, -5, -45);
+    ellipse(1, -47.5, 4, 1.5);
+
+    // Tail
+    triangle(-20, 47.5, -15, 37.5, -25, 37.5);
+
+    // Left leg
+    line(-35, 0, -45, 0);
+    line(-45, 0, -50, -5);
+    line(-45, 0, -52.5, 0);
+    line(-45, 0, -50, 5);
+
+    // Right leg
+    line(-35, 22.5, -45, 22.5);
+    line(-45, 22.5, -50, 17.5);
+    line(-45, 22.5, -52.5, 22.5);
+    line(-45, 22.5, -50, 27.5);
 
     pop(); // dispose of this layer
 

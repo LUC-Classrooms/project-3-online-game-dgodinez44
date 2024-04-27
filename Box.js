@@ -8,31 +8,30 @@ function Box(_x, _y){
 
   this.angle = 0;
 
-  /* choose a color scheme at random */
-  if(random(100) > 50){ // 50-50 chance
-    this.boxColor = color(random(100, 255), 0, 0); // red
-    this.ribbonColor = color(0, random(100, 255), 0); // green
-  } else {
-    this.boxColor = color(0, random(100, 255), 0); // green
-    this.ribbonColor = color(random(100, 255), 0, 0); // red
-  }
-
   this.display = function(){
-
     push();
     translate(this.x, this.y);
     rotate(this.angle);
+    
+    // Draw the stem
+    stroke(100, 80, 50);
+    strokeWeight(5);
+    
+    line(0, -40, 0, 0);
+    line(0, -50, 10, -70);
+    line(0, -50, -10, -70);
 
-    rectMode(CENTER);
-    fill(this.boxColor);
-    rect(0, 0, 40); // 40px square
-
-    fill(this.ribbonColor);
-    rect(0, 0, 40, 10); // horizontal ribbon
-    rect(0, 0, 10, 40); // vertical ribbon
+    // Draw grapes
+    fill(128, 0, 128); // Purple color
+    noStroke();
+    ellipse(-15, -45, 20, 20); // First grape at top
+    ellipse(0, -45, 20, 20);    // Second grape at top
+    ellipse(15, -45, 20, 20);   // Third grape at top
+    ellipse(-5, -25, 20, 20);   // First grape in middle
+    ellipse(5, -25, 20, 20);    // Second grape in middle
+    ellipse(0, -5, 20, 20);     // Grape at bottom
 
     pop();
-
   }
 
   this.move = function() {
@@ -42,7 +41,5 @@ function Box(_x, _y){
   this.spin = function() {
     this.angle += this.rSpeed; // spin
   }
-
-
 
 }

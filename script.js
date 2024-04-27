@@ -140,7 +140,7 @@ function keyPressed(){
     case UP_ARROW :
       console.log("up");
       player1.y -= 30; // move up 30 px
-      player1.angle = 0; // no rotation
+      //player1.angle = 0; // no rotation
       if (player1.y < 0){
         player1.y = height;
       } // wrap to bottom 
@@ -148,7 +148,7 @@ function keyPressed(){
     case DOWN_ARROW :
       console.log("down");
       player1.y += 30; // move down 30 px
-      player1.angle = PI; // point down (rotate 180 degrees)
+      //player1.angle = PI; // point down (rotate 180 degrees)
       if (player1.y > height){
         player1.y = 0;
       } // wrap to top
@@ -156,7 +156,7 @@ function keyPressed(){
     case LEFT_ARROW :
       console.log("left");
       player1.x -= 30; // move left 30 px
-      player1.angle = PI + HALF_PI; // point left
+      //player1.angle = PI + HALF_PI; // point left
       if (player1.x < 0){
         player1.x = width;
       } // wrap to right
@@ -164,7 +164,7 @@ function keyPressed(){
     case RIGHT_ARROW :
       console.log("right");
       player1.x += 30; // move right 30 px
-      player1.angle = HALF_PI; // point right
+      //player1.angle = HALF_PI; // point right
       if (player1.x > width){
         player1.x = 0; 
       } // wrap to left
