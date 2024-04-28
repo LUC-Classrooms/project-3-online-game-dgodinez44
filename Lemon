@@ -13,6 +13,22 @@ function Lemon(_x, _y){
         translate(this.x, this.y);
         rotate(this.angle);
         
+        
+        fill("yellow"); // Draw the lemon
+        ellipse(-15,-45, 55, 45);
+        fill("green"); // Draw the leaves
+        ellipse(20, -45, 20, 15);
+        rotate(0.7);
+        ellipse(-10, -42, 20, 15);
+
         pop();
+    }
+
+    this.move = function() {
+        this.y += this.ySpeed; // spin
+    }
+
+    this.spin = function(){
+        this.angle += this.rSpeed; // spin 
     }
 }
