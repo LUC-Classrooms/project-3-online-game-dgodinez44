@@ -51,10 +51,13 @@ function splash() {
   // this is what you would see when the game starts
   background(170, 210, 230);
   textAlign(CENTER);
-  textSize(16);
+  textSize(30);
+  fill("white");
   text("THE DUCK GAME!", 300, 250);
+  textSize(16);
+  text("GOAL: EAT ALL THE GRAPES!!", 300, 275);
   textSize(12);
-  text("(click the mouse to continue)", 300, 275);
+  text("(click the mouse to continue)", 300, 300);
   testBox.display();
   testBox.spin();
 }
@@ -65,17 +68,49 @@ function play() {
   fill(0, 0, 200)
   textAlign(CENTER);
   textSize(16);
-  text("GOAL: EAT ALL THE GRAPES!!", width / 2, height / 2);
-  // player1.x = mouseX // this is if I want player1 to follow the mouse 
-  // I will be using the arrow keys instead
+
   push();
   fill("green");
-  ellipse(300,400,650,150);
+  ellipse(300,400,650,150); // grass
+  fill("brown");
+  rect(450, 300, 100, 50); // the lemonade stand
+  rect(450, 240, 15,60);
+  rect(535, 240, 15, 60);
+  rect(440, 200, 120, 50);
+
+  rect(60, 260, 20, 100); // tree
+  fill("green");
+  ellipse(40, 250, 50, 50); // leaves
+  ellipse(70, 230, 60, 60);
+  ellipse(100, 250, 50, 50);
+  ellipse(70, 250, 50, 50);
+  fill("white");
+  noStroke();
+  // first cloud
+  ellipse(100, 120, 100, 40); // bottom of cloud 
+  ellipse(65, 110, 40,40); // left circle on cloud
+  ellipse(100, 100, 50,50); // middle circle on cloud
+  ellipse(130, 110, 40,40); // right circle on cloud
+  // second cloud
+  ellipse(300, 70, 100, 40); // bottom of cloud
+  ellipse(265, 60, 40, 40); // left circle of cloud
+  ellipse(300, 50, 50, 50); // middle circle of cloud 
+  ellipse(330, 60, 40, 40); // right circle of cloud 
+  // third cloud
+  ellipse(500, 120, 100, 40); // bottom of cloud
+  ellipse(465, 110, 40, 40); // left circle of cloud 
+  ellipse(500, 100, 50, 50); // middle circle of cloud
+  ellipse(530, 110, 40,40); // right circle of cloud 
+
+  textSize(18);
+  text("ICE FRESH", 500, 230);
+  text("LEMONADE", 500, 330);
   pop();
+
   player1.display();
   
   textAlign(LEFT);
-  text("Time Remaining: " + (gameTimer.time - Math.trunc(gameTimer.elapsedTime))/1000, 20, 100);
+  text("Time Remaining: " + (gameTimer.time - Math.trunc(gameTimer.elapsedTime))/1000, 20, 60);
   // show elapsed time in top left corner 
   text("Score: " + score, 20, 40);
   if(gameTimer.isFinished()){
@@ -111,12 +146,13 @@ function play() {
 
 function gameOver() {
   // this is what you see when the game ends
-  background(0);
+  background(170, 210, 230); //light blue background
   fill(255, 0, 0)
   textAlign(CENTER);
-  textSize(16);
+  textSize(30);
   text("Game Over!", width / 2, height / 2);
-  text("Grapes Eaten: " + score, width/2, height * 2/3);
+  textSize(20);
+  text("Grapes Eaten: " + score, width/2, 250);
 }
 
 function mousePressed() {
@@ -141,22 +177,6 @@ function mousePressed() {
 
 function keyPressed(){
   switch(keyCode){
-    case UP_ARROW :
-      console.log("up");
-      player1.y -= 30; // move up 30 px
-      //player1.angle = 0; // no rotation
-      if (player1.y < 0){
-        player1.y = height;
-      } // wrap to bottom 
-      break;
-    case DOWN_ARROW :
-      console.log("down");
-      player1.y += 30; // move down 30 px
-      //player1.angle = PI; // point down (rotate 180 degrees)
-      if (player1.y > height){
-        player1.y = 0;
-      } // wrap to top
-      break;
     case LEFT_ARROW :
       console.log("left");
       player1.x -= 30; // move left 30 px
