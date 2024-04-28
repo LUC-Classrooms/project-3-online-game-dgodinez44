@@ -49,12 +49,12 @@ function draw() {
 
 function splash() {
   // this is what you would see when the game starts
-  background(200);
+  background(170, 210, 230);
   textAlign(CENTER);
   textSize(16);
-  text("Let's Play a Game!", width / 2, height / 2);
+  text("THE DUCK GAME!", 300, 250);
   textSize(12);
-  text("(click the mouse to continue)", width / 2, height / 2 + 30);
+  text("(click the mouse to continue)", 300, 275);
   testBox.display();
   testBox.spin();
 }
@@ -68,6 +68,10 @@ function play() {
   text("GOAL: EAT ALL THE GRAPES!!", width / 2, height / 2);
   // player1.x = mouseX // this is if I want player1 to follow the mouse 
   // I will be using the arrow keys instead
+  push();
+  fill("green");
+  ellipse(300,400,650,150);
+  pop();
   player1.display();
   
   textAlign(LEFT);
