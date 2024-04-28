@@ -61,17 +61,17 @@ function splash() {
 
 function play() {
   // this is what you see when the game is running 
-  background(0, 200, 0);
+  background(170, 210, 230); //light blue background
   fill(0, 0, 200)
   textAlign(CENTER);
   textSize(16);
-  text("This is where the Game happens", width / 2, height / 2);
+  text("GOAL: EAT ALL THE GRAPES!!", width / 2, height / 2);
   // player1.x = mouseX // this is if I want player1 to follow the mouse 
   // I will be using the arrow keys instead
   player1.display();
   
   textAlign(LEFT);
-  text("Time Remaining: " + (gameTimer.time - Math.trunc(gameTimer.elapsedTime))/1000, 40, 100);
+  text("Time Remaining: " + (gameTimer.time - Math.trunc(gameTimer.elapsedTime))/1000, 20, 100);
   // show elapsed time in top left corner 
   text("Score: " + score, 20, 40);
   if(gameTimer.isFinished()){
@@ -112,7 +112,7 @@ function gameOver() {
   textAlign(CENTER);
   textSize(16);
   text("Game Over!", width / 2, height / 2);
-  text("Your final score: " + score, width/2, height * 2/3);
+  text("Grapes Eaten: " + score, width/2, height * 2/3);
 }
 
 function mousePressed() {
