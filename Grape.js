@@ -1,4 +1,4 @@
-function Box(_x, _y){
+function Grape(_x, _y){
   this.x = _x;
   this.y = _y;
 

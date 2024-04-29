@@ -10,6 +10,7 @@ function Player(tempX, tempY) {
     translate(this.x, this.y); // move origin point
     rotate(this.angle); // player can rotate
     
+    // draw the duck 
     // Head
     strokeWeight(1); // Adjust strokeWeight to keep the stroke thickness the same
     fill("yellow");
@@ -51,11 +52,4 @@ function Player(tempX, tempY) {
 
   }
 
-
-  this.move = function () {
-//folow the mouse for now
-    this.x = mouseX;
-    this.y = mouseY;
-
-  }
 }

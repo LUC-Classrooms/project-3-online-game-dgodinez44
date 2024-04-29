@@ -1,16 +1,20 @@
 /**
- * Project 3 versions 0-4 - 2D Web Game
+ * Project 3 Final Version - 2D Web Game
  * Name: Denise Godinez
- * 
- * Use this template to get started creating a simple 2D game for the web using P5.js. 
+ * A duck game where the objective is to get the duck or the player to 
+ * eat as many grapes as they can while avoiding the lemons. Grapes
+ * score points and lemons deduct points. 
  */
 
 var gameState = "splash";
-var player1;
-var gameTimer;
-var testBox; // a box to preview on the splash screen
-var dropTimer; // regulate box drops 
-var presents = new Array(0); // an empty array called "presents"
+var player1; // the player or in this case the duck
+var gameTimer; // set amount of time the game runs 
+var splashGrape; // a grape to preview on the splash screen
+var gameOverLemon; // a lemon to preview on the gameOver screen
+var dropTimerG; // regulate grape drops 
+var dropTimerL; // regulate lemon drops
+var grapes = new Array(0); // an empty array called "grapes"
+var lemons = new Array(0); // an empty array called "lemons"
 var score = 0; // keep track of points (starting at 0)
 
 function setup() {
@@ -19,17 +23,15 @@ function setup() {
   player1 = new Player(width/2, height * 4/5);
   console.log(player1);
   gameTimer = new Timer(30000); // 30 second timer 
-  dropTimer = new Timer(1000); // drop every second 
-  testBox = new Box(width/2, height/3); 
+  dropTimerG = new Timer(1000); // drop every second 
+  dropTimerL = new Timer(3000); // drop every 3 seconds
+  splashGrape = new Grape(width/2, height/3); // grape that is seen on the splash screen
+  gameOverLemon = new Lemon(width/2, height/3); // lemon that is seen on the gameOver screen
 
 }
 
 function draw() {
   background(200);
-  /* un-comment each line to see it work */
-  //splash(); // call the splash screen function (below)
-  //play(); // call the play screen function (below)
-  //gameOver(); // call the gameOver screen function (below)
 
   switch(gameState){
     case "splash":
@@ -42,7 +44,7 @@ function draw() {
       gameOver(); // go to the "game over" screen 
       break;
     default: 
-    console.log("no match found - check your mousePressed() function!")
+    console.log("no match found - check your mousePressed() function!");
   }
 
 }
@@ -54,18 +56,22 @@ function splash() {
   textSize(30);
   fill("white");
   text("THE DUCK GAME!", 300, 250);
-  textSize(16);
+  textSize(20);
+  fill("green");
   text("GOAL: EAT ALL THE GRAPES!!", 300, 275);
+  fill("red");
+  text("AVOID THE LEMONS!!", 300, 300);
   textSize(12);
-  text("(click the mouse to continue)", 300, 300);
-  testBox.display();
-  testBox.spin();
+  fill("white");
+  text("(click the mouse to continue)", 300, 320);
+  splashGrape.display(); // display a spinning grape 
+  splashGrape.spin();
 }
 
 function play() {
   // this is what you see when the game is running 
   background(170, 210, 230); //light blue background
-  fill(0, 0, 200)
+  fill(0, 0, 200);
   textAlign(CENTER);
   textSize(16);
 
@@ -73,6 +79,7 @@ function play() {
   fill("green");
   ellipse(300,400,650,150); // grass
   fill("brown");
+
   rect(450, 300, 100, 50); // the lemonade stand
   rect(450, 240, 15,60);
   rect(535, 240, 15, 60);
@@ -84,6 +91,7 @@ function play() {
   ellipse(70, 230, 60, 60);
   ellipse(100, 250, 50, 50);
   ellipse(70, 250, 50, 50);
+
   fill("white");
   noStroke();
   // first cloud
@@ -102,12 +110,13 @@ function play() {
   ellipse(500, 100, 50, 50); // middle circle of cloud
   ellipse(530, 110, 40,40); // right circle of cloud 
 
-  textSize(18);
+  textSize(18); // text for the lemonade stand 
   text("ICE FRESH", 500, 230);
   text("LEMONADE", 500, 330);
+
   pop();
 
-  player1.display();
+  player1.display(); // show the player on the screen 
   
   textAlign(LEFT);
   text("Time Remaining: " + (gameTimer.time - Math.trunc(gameTimer.elapsedTime))/1000, 20, 60);
@@ -116,43 +125,69 @@ function play() {
   if(gameTimer.isFinished()){
     gameState = "gameOver";
   }
-  if(dropTimer.isFinished()){
-    let p = new Box(random(width), -40);
-    // new box, anywhere across the width of the canvas, but 40 px above the canvas
-    presents.push(p); // add object 'p' to the 'presents' Array 
-    dropTimer.start(); // restart timer for next drop
+  if(dropTimerG.isFinished()){
+    let p = new Grape(random(width), -40);
+    // new grape, anywhere across the width of the canvas, but 40 px above the canvas
+    grapes.push(p); // add object 'p' to the 'grapes' Array 
+    dropTimerG.start(); // restart timer for next drop
   }
-  for(let i = 0; i < presents.length; i++){
+  if(dropTimerL.isFinished()){
+    let q = new Lemon(random(width), -40); 
+    // new lemon, anywhere across the width of the canvas, but 40 above the canvas
+    lemons.push(q);
+    dropTimerL.start(); // restart timer for next drop
+  }
+  for(let i = 0; i < grapes.length; i++){
     // for each element of the array, represented by 'i', do the following: 
-    presents[i].display(); // draw it on the canvas
-    presents[i].move(); // make it drop
-    presents[i].spin(); // make it rotate 
+    grapes[i].display(); // draw it on the canvas
+    grapes[i].move(); // make it drop
+    grapes[i].spin(); // make it rotate 
 
-    if(presents[i].y > height){
-      // present went below the canvas 
-      presents.splice(i,1); // remove from array 
-      // remove 1 element from "presents" at index 'i'
-      score--; // take away 1 point
+    if(grapes[i].y > height){
+      // grape went below the canvas 
+      grapes.splice(i,1); // remove from array 
+      // remove 1 element from "grapes" at index 'i'
     }
-    let d = dist(presents[i].x, presents[i].y, player1.x, player1.y);
+    let d = dist(grapes[i].x, grapes[i].y, player1.x, player1.y);
     if(d < 50){
       // if it's within 50 pixels, do something! 
-      presents.splice(i, 1); // remove the present from the array
+      grapes.splice(i, 1); // remove the grape from the array
       score++; // add 1 point!!
     }
   }
 
+  for(let i = 0; i < lemons.length; i++){
+    // for each element of the array, represented by 'i', do the following: 
+    lemons[i].display(); // draw it on the canvas
+    lemons[i].move(); // make it drop
+    lemons[i].spin(); // make it rotate 
+
+    if(lemons[i].y > height){
+      // lemon went below the canvas 
+      lemons.splice(i,1); // remove from array 
+      // remove 1 element from "lemons" at index 'i'
+    }
+    let e = dist(lemons[i].x, lemons[i].y, player1.x, player1.y);
+    if(e < 50){
+      // if it's within 50 pixels, do something! 
+      lemons.splice(i, 1); // remove the lemon from the array
+      score--; // remove 1 point!!
+    }
+  }
 }
 
 function gameOver() {
   // this is what you see when the game ends
   background(170, 210, 230); //light blue background
-  fill(255, 0, 0)
+  fill(255, 0, 0);
   textAlign(CENTER);
   textSize(30);
-  text("Game Over!", width / 2, height / 2);
+  text("Game Over!", width / 2, 250);
   textSize(20);
-  text("Grapes Eaten: " + score, width/2, 250);
+  fill("white"); 
+  text("Grapes Eaten: " + score, width/2, 280);
+  gameOverLemon.display(); // display spinning lemon
+  gameOverLemon.spin();
 }
 
 function mousePressed() {
@@ -162,7 +197,8 @@ function mousePressed() {
   if(gameState == "splash"){
     gameState = "play"; // go to the play() screen
     gameTimer.start(); // starts the timer
-    dropTimer.start(); // start the drop timer for presents 
+    dropTimerG.start(); // start the drop timer for grapes 
+    dropTimerL.start(); // start the drop timer for the lemons
     score = 0; // reset score to 0 at start of game 
   } // go to "play"
   else if(gameState == "play"){

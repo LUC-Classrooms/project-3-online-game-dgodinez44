@@ -13,7 +13,6 @@ function Lemon(_x, _y){
         translate(this.x, this.y);
         rotate(this.angle);
         
-        
         fill("yellow"); // Draw the lemon
         ellipse(-15,-45, 55, 45);
         fill("green"); // Draw the leaves
